@@ -1,5 +1,4 @@
 require_relative '../lib/board.rb'
-require_relative '../lib/game.rb'
 
 describe Board do
     subject(:board) { described_class.new } 
@@ -52,7 +51,7 @@ describe Board do
             end
 
             it "means win of player #1" do 
-                expect(board.check_win(1,4,'🟢')).to be true
+                expect(board.check_win('🟢')).to be true
             end
         end
 
@@ -68,7 +67,7 @@ describe Board do
             end
 
             it "means win of player #2" do 
-                expect(board.check_win(4,1,'🔴')).to be true
+                expect(board.check_win('🔴')).to be true
             end
         end
 
@@ -84,7 +83,7 @@ describe Board do
             end
 
             it "means win of player #1" do 
-                expect(board.check_win(2,3,'🟢')).to be true
+                expect(board.check_win('🟢')).to be true
             end
         end
 

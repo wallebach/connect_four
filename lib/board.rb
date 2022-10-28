@@ -63,7 +63,6 @@ class Board
         @grid_rows.times do | row |
             @grid_columns.times do | column |
                 if check_horizontal(row, column, color) || check_vertical(row, column, color) || check_diagonals(row, column, color)
-                    puts "eaaaa"
                     return true
                 end
             end

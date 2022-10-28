@@ -35,7 +35,10 @@ class Game
         turn_message
         move = correct_move
         @board.draw
-        @board.check_win(@current_player.symbol)
+        if @board.check_win(@current_player.symbol) 
+            win_message(@current_player.name)
+            @board.game_over = true
+        end
     end
 
     def welcome_message
@@ -63,6 +66,10 @@ class Game
         name = gets.chomp
         token = @tokens[num-1]
         Player.new(name, token)
+    end
+
+    def win_message(player_name)
+        puts "Hooray, #{player_name} wins!"
     end
 end
 
