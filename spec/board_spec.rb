@@ -34,9 +34,57 @@ describe Board do
             before do
                 board.instance_variable_set(:@game_over, true)
             end
-            
+
             it "then it's not possible to put a token" do 
                 expect(board.game_over).to be true
+            end
+        end
+
+        context "when there is a win vertically" do 
+            before do
+                board.instance_variable_set(:@grid,
+                [['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','🟢','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','🟢','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','🟢','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','🟢','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','🔴','⚪️','⚪️']])
+            end
+
+            it "means win of player #1" do 
+                expect(board.check_win(1,4,'🟢')).to be true
+            end
+        end
+
+        context "when there is a win horizontally" do 
+            before do
+                board.instance_variable_set(:@grid,
+                [['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','🔴','🔴','🔴','🔴','⚪️','⚪️'],
+                 ['⚪️','🔴','🟢','🟢','🟢','⚪️','⚪️']])
+            end
+
+            it "means win of player #2" do 
+                expect(board.check_win(4,1,'🔴')).to be true
+            end
+        end
+
+        context "when there is a win in diagonal" do 
+            before do
+                board.instance_variable_set(:@grid,
+                [['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','⚪️','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','🟢','⚪️','⚪️','⚪️'],
+                 ['⚪️','⚪️','⚪️','🔴','🟢','⚪️','⚪️'],
+                 ['⚪️','🔴','🔴','🔴','🔴','🟢','⚪️'],
+                 ['⚪️','🔴','🟢','🟢','🟢','⚪️','🟢']])
+            end
+
+            it "means win of player #1" do 
+                expect(board.check_win(2,3,'🟢')).to be true
             end
         end
 

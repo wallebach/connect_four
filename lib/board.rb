@@ -30,16 +30,16 @@ class Board
 
     def check_horizontal(row, column, color)
         return if column > @grid_columns - column
-
+        
         return @grid[row][column] == color && @grid[row][column+1] == color && 
-            @grid[row][column+2] == color && @grid[row][column+2] == color
+            @grid[row][column+2] == color && @grid[row][column+3] == color
     end
 
     def check_vertical(row, column, color)
         return if row > @grid_rows - row
 
         return @grid[row][column] == color && @grid[row+1][column] == color && 
-            @grid[row+2][column] == color && @grid[row+2][column] == color
+            @grid[row+2][column] == color && @grid[row+3][column] == color
     end
 
     def check_left_diagonal(row, column, color) 
@@ -90,4 +90,3 @@ class Board
 end
 
 board = Board.new
-board.draw
