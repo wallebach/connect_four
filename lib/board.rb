@@ -1,9 +1,6 @@
 class Board
-    attr_accessor :board_rows
-    attr_accessor :board_columns
-    attr_accessor :number_of_turns
-    attr_accessor :grid
-    attr_accessor :game_over
+    attr_accessor :board_rows, :board_columns, :grid
+    attr_accessor :number_of_turns, :game_over
 
     def initialize
         @grid_rows = 6
@@ -29,28 +26,28 @@ class Board
     end
 
     def check_horizontal(row, column, color)
-        return if column > @grid_columns - column
-        
+        return false if column > @grid_columns - column
+
         return @grid[row][column] == color && @grid[row][column+1] == color && 
             @grid[row][column+2] == color && @grid[row][column+3] == color
     end
 
     def check_vertical(row, column, color)
-        return if row > @grid_rows - row
+        return false if row >= @grid_rows - row
 
         return @grid[row][column] == color && @grid[row+1][column] == color && 
             @grid[row+2][column] == color && @grid[row+3][column] == color
     end
 
     def check_left_diagonal(row, column, color) 
-        return if column > @grid_columns - column
+        return false if column > @grid_columns - column
 
         return @grid[row][column] == color && @grid[row+1][column+1] == color &&
             @grid[row+2][column+2] == color && @grid[row+3][column+3] == color
     end
 
     def check_right_diagonal(row, column, color)
-        return if column < @grid_columns - column
+        return false if column < @grid_columns - column
 
         return @grid[row][column] == color && @grid[row+1][column-1] == color &&
             @grid[row+2][column-2] == color && @grid[row+3][column-3] == color
@@ -62,8 +59,16 @@ class Board
         check_right_diagonal(row, column, color) || check_left_diagonal(row, column, color)
     end
 
-    def check_win(row, column, color) 
-        return check_horizontal(row, column, color) || check_vertical(row, column, color) || check_diagonals(row, column, color)
+    def check_win(color) 
+        @grid_rows.times do | row |
+            @grid_columns.times do | column |
+                if check_horizontal(row, column, color) || check_vertical(row, column, color) || check_diagonals(row, column, color)
+                    puts "eaaaa"
+                    return true
+                end
+            end
+        end
+        return false
     end
 
     def put_token(column, color)
@@ -74,7 +79,7 @@ class Board
                 @grid[current_row][column] = color
                 increase_moves_num
                 can_put = true
-                return
+                return can_put
             end
         end
 
