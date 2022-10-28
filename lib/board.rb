@@ -3,13 +3,16 @@ require_relative 'color_token.rb'
 class Board
     attr_accessor :board_rows
     attr_accessor :board_columns
-    attr_accessor :board
+    attr_accessor :number_of_turns
+    attr_accessor :grid
 
     def initialize
         @grid_rows = 6
         @grid_columns = 7
+        @moves_made = 0
+        @number_of_turns = 0
+
         create  
-        draw  
     end
 
     def create
@@ -63,13 +66,25 @@ class Board
         return check_horizontal(row, column, color) || check_vertical(row, column, color) || check_diagonals(row, column, color)
     end
 
-    def find_free_row(row, column, color)
-        @grid_rows.times do | current_row |
-            return current_row if @grid[current_row][column].color == :empty 
+    def put_token(column, color)
+        can_put = false
+        rows_num = @grid_rows - 1
+        rows_num.downto(0) do | current_row |
+            if @grid[current_row][column].color == ColorToken.empty_color
+                @grid[current_row][column] = ColorToken.new(color)
+                @number_of_turns += 1
+                can_put = true
+                return
+            end
         end
-        return -1
+
+        can_put
+    end
+
+    def moves_left?
+        return true if @moves_made < @grid_rows * grid_columns
+        false
     end
 end
 
 board = Board.new
-puts board.find_free_row(3,3,:empty)
